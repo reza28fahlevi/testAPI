@@ -2,26 +2,28 @@
 
 namespace App\Controllers;
 
+use CodeIgniter\RESTful\ResourceController;
 use CodeIgniter\API\ResponseTrait;
 use App\Models\EmployeesModel;
 
-class Employees extends BaseController
+class ApiEmployees extends ResourceController
 {
     use ResponseTrait;
 
+    function __construct()
+    {
+        $this->model = new EmployeesModel();
+    }
+
     // all employees
     public function index(){
-        $model = new EmployeesModel();
-
-        $data['employees'] = $model->orderBy('id', 'DESC')->findAll();
+        $data['employees'] = $this->model->orderBy('id', 'DESC')->findAll();
 
         return $this->respond($data);
     }
     // show employee
     public function show($id = null){
-        $model = new EmployeesModel();
-
-        $data = $model->where('id',$id)->first();
+        $data = $this->model->where('id',$id)->first();
 
         if($data){
             return $this->respond($data);
@@ -32,18 +34,17 @@ class Employees extends BaseController
     // save data
     public function create()
     {
-        $model = new EmployeesModel();
-
         $data = $this->request->getPost();
-        if(!$model->save($data)){
-            return $this->fail($model->errors());
+        if(!$this->model->insert($data)){
+            return $this->fail($this->model->errors());
         }
-        
+
         $response = [
             'status' => 201,
             'error' => null,
             'messages' => [
-                'success' => 'Data saved'
+                'success' => 'Data saved',
+                'id' => $this->model->insertID()
             ]
         ];
 
@@ -52,13 +53,11 @@ class Employees extends BaseController
     // update data
     public function update($id = null)
     {
-        $model = new EmployeesModel();
-
         $data = [
             'employee_name' => $this->request->getVar('employee_name'),
             'employee_departement'  => $this->request->getVar('employee_departement'),
         ];
-        $model->update($id, $data);
+        $this->model->update($id, $data);
 
         $response = [
             'status'   => 200,
@@ -73,12 +72,10 @@ class Employees extends BaseController
     // delete data
     public function delete($id = null)
     {
-        $model = new EmployeesModel();
-
-        $data = $model->where('id', $id)->delete($id);
+        $data = $this->model->where('id', $id)->delete($id);
 
         if($data){
-            $model->delete($id);
+            $this->model->delete($id);
             $response = [
                 'status'   => 200,
                 'error'    => null,

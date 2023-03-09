@@ -29,13 +29,13 @@ $routes->set404Override();
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-// $routes->get('/', 'Home::index');
-// $routes->resource("Employees");
-$routes->get('/', 'Employees::index');
-$routes->get('/(:num)', 'Employees::show/$1');
-$routes->post('/', 'Employees::create');
-$routes->put('/(:num)', 'Employees::update/$1');
-$routes->delete('/(:num)', 'Employees::delete/$1');
+$routes->get('/', 'Home::index');
+$routes->resource('api/employees', ['controller' => 'ApiEmployees']);
+// $routes->get('api/employees', 'ApiEmployees::index');
+// $routes->get('api/employees/(:num)', 'ApiEmployees::show/$1');
+// $routes->post('api/employees', 'ApiEmployees::create');
+// $routes->put('api/employees/(:num)', 'ApiEmployees::update/$1');
+// $routes->delete('api/employees/(:num)', 'ApiEmployees::delete/$1');
 
 /*
  * --------------------------------------------------------------------
