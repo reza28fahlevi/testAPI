@@ -34,7 +34,10 @@ class ApiEmployees extends ResourceController
     // save data
     public function create()
     {
-        $data = $this->request->getPost();
+        $data = [
+            'employee_name' => $this->request->getVar('employee_name',FILTER_SANITIZE_STRING),
+            'employee_departement'  => $this->request->getVar('employee_departement',FILTER_SANITIZE_STRING),
+        ];
         if(!$this->model->insert($data)){
             return $this->fail($this->model->errors());
         }
@@ -54,8 +57,8 @@ class ApiEmployees extends ResourceController
     public function update($id = null)
     {
         $data = [
-            'employee_name' => $this->request->getVar('employee_name'),
-            'employee_departement'  => $this->request->getVar('employee_departement'),
+            'employee_name' => $this->request->getVar('employee_name',FILTER_SANITIZE_STRING),
+            'employee_departement'  => $this->request->getVar('employee_departement',FILTER_SANITIZE_STRING),
         ];
         $this->model->update($id, $data);
 
