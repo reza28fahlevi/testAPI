@@ -29,7 +29,7 @@ $routes->set404Override();
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Home::index');
+$routes->get('/', 'HomeController::index');
 $routes->resource('api/employees', ['controller' => 'ApiEmployees']);
 // $routes->get('api/employees', 'ApiEmployees::index');
 // $routes->get('api/employees/(:num)', 'ApiEmployees::show/$1');
