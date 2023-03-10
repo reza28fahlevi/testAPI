@@ -144,51 +144,51 @@
     })
     
     function edit(val){
-            var id = $(val).attr("data-id");
-            
-            $('#form1')[0].reset();        
-            $.ajax({
-                type: "GET",
-                url: '<?php echo base_url('api/employees/')?>' + id,
-                data: {"data":"employee"},
-                success: function(data){
-                    console.log(data);
-                    $('#id').val(data.id);
-                    $('#employee_name').val(data.employee_name);
-                    $('#employee_departement').val(data.employee_departement);
-                }
-            });
-            $('#modalEmployee').modal('show');
-        }
+        var id = $(val).attr("data-id");
+        
+        $('#form1')[0].reset();        
+        $.ajax({
+            type: "GET",
+            url: '<?php echo base_url('api/employees/')?>' + id,
+            data: {"data":"employee"},
+            success: function(data){
+                console.log(data);
+                $('#id').val(data.id);
+                $('#employee_name').val(data.employee_name);
+                $('#employee_departement').val(data.employee_departement);
+            }
+        });
+        $('#modalEmployee').modal('show');
+    }
 
-        function deleteEmployee(val){
-            var id = $(val).attr("data-id");
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $.ajax({
-                            url: "<?php echo base_url('api/employees/')?>" + id,
-                            type: 'DELETE',
-                            success: function(result) {
-                                if(result.messages.success){
-                                    Swal.fire(
-                                        'Deleted!',
-                                        'Your file has been deleted.',
-                                        'success'
-                                    )
-                                    dataTables.ajax.reload();
-                                }
+    function deleteEmployee(val){
+        var id = $(val).attr("data-id");
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "<?php echo base_url('api/employees/')?>" + id,
+                        type: 'DELETE',
+                        success: function(result) {
+                            if(result.messages.success){
+                                Swal.fire(
+                                    'Deleted!',
+                                    'Your file has been deleted.',
+                                    'success'
+                                )
+                                dataTables.ajax.reload();
                             }
-                        });
-                    }
-                })
-            
-        }
+                        }
+                    });
+                }
+            })
+        
+    }
 </script>
