@@ -60,3 +60,9 @@ Additionally, make sure that the following extensions are enabled in your PHP:
 - json (enabled by default - don't turn it off)
 - [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
 - [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+
+## How To Install
+
+I use postgre as the database. First make sure you have installed postgre. I've created a table with the name "employees", you can import the sql format. The file location is app\Database\Migrations\employees.sql.
+Before opening this project in browser, make sure you have internet connection.
+
