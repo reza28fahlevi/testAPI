@@ -43,7 +43,7 @@ class ApiEmployees extends ResourceController
         }
 
         $response = [
-            'status' => 201,
+            'status' => 200,
             'error' => null,
             'messages' => [
                 'success' => 'Data saved',

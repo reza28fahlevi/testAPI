@@ -12,7 +12,7 @@
 
     <title>Employee Data</title>
   </head>
-  <body>
+  <body class="mx-5">
     <h1 id="headers">Employee Data</h1>
     <button type="button" id="add" class="btn btn-sm btn-success float-right">Add +</button>
     <table id="employeeTable" class="display" style="width:100%">
@@ -20,7 +20,7 @@
             <tr>
                 <th>Name</th>
                 <th>Departement</th>
-                <th>Function</th>
+                <th data-orderable="false">Function</th>
             </tr>
         </thead>
         <tbody>
@@ -97,51 +97,47 @@
             $('#form1')[0].reset();
             $('#modalEmployee').modal('show');
         })
-        $('#form1').on('submit', function() {
-            var employee_name = $('#employee_name').val();
-            var employee_departement = $('#employee_departement').val();
-            var id = $('#id').val();
-            if(id!=""){
-                var url = "<?php echo base_url('api/employees/');?>" + id
-            }else{
-                var url = "<?php echo base_url('api/employees/');?>"
-            }
-            $.ajax({
-                    url: url,
-                    type: "POST",
-                    data: {
-                        employee_name: employee_name,
-                        employee_departement: employee_departement
-                    },
-                    success: function(response) {
-                        var response = JSON.parse(response);
-                        if(!response.error)
-                        {
-                            Swal.fire({
-                                title: 'Success',
-                                text: response.messages.success,
-                                icon: 'success',
-                                confirmButtonText: 'Ok'
-                            })
-                        }
-                        else
-                        {
-                            alert('Server error');
-                            return false;
-                        }
-                    }
-                });
-        });
-        $("#headers").click(function(){
-            Swal.fire({
-                title: 'Error!',
-                text: 'Do you want to continue',
-                icon: 'error',
-                confirmButtonText: 'Cool'
-            })
-        })
-     
+        
     })
+
+    $('#form1').on('submit', function() {
+        var employee_name = $('#employee_name').val();
+        var employee_departement = $('#employee_departement').val();
+        var id = $('#id').val();
+        if(id!=""){
+            var url = "<?php echo base_url('api/employees/update/');?>" + id
+        }else{
+            var url = "<?php echo base_url('api/employees');?>"
+        }
+        
+        $.ajax({
+                type: "POST",
+                url: url,
+                data: {
+                    employee_name: employee_name,
+                    employee_departement: employee_departement
+                },
+                success: function(responses) {
+                    if(responses.status==200)
+                    {
+                        Swal.fire({
+                            title: 'Success',
+                            text: responses.messages.success,
+                            icon: 'success',
+                            confirmButtonText: 'Ok'
+                        })
+                        $("#modalEmployee").modal('hide');
+                        dataTables.ajax.reload();
+                    }
+                    else
+                    {
+                        alert('Server error');
+                    }
+                }
+            });
+            
+        return false;
+    });
     
     function edit(val){
         var id = $(val).attr("data-id");

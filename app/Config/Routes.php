@@ -34,7 +34,7 @@ $routes->resource('api/employees', ['controller' => 'ApiEmployees']);
 // $routes->get('api/employees', 'ApiEmployees::index');
 // $routes->get('api/employees/(:num)', 'ApiEmployees::show/$1');
 // $routes->post('api/employees', 'ApiEmployees::create');
-// $routes->put('api/employees/(:num)', 'ApiEmployees::update/$1');
+$routes->post('api/employees/update/(:num)', 'ApiEmployees::update/$1');
 // $routes->delete('api/employees/(:num)', 'ApiEmployees::delete/$1');
 
 /*
