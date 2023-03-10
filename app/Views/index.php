@@ -15,8 +15,8 @@
   <body class="mx-5">
     <h1 id="headers">Employee Data</h1>
     <button type="button" id="add" class="btn btn-sm btn-success float-right">Add +</button>
-    <table id="employeeTable" class="display" style="width:100%">
-        <thead>
+    <table id="employeeTable" class="table table-hover display" style="width:100%">
+        <thead class="thead-dark">
             <tr>
                 <th>Name</th>
                 <th>Departement</th>
